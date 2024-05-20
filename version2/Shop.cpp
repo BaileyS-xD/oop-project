@@ -1,5 +1,4 @@
 #include "Shop.h"
-#include "Farmer.h"
 
 Shop::Shop(){
     FruitFert* ffert = new FruitFert;
@@ -15,22 +14,25 @@ Item** Shop::get_Items(){
     return items;
 }
 
-void Shop::buyItem(string n){
+Item* Shop::buyItem(int n){
     switch (n) {
-        case "Fruit Fertiliser":
-            
-            break;
-        case "Vegetable Fertiliser":
-
-            break;
-        case "Bug Repellent":
-
-            break;
+        case 1: { // fruit
+            return items[0];
+        }
+        case 2: { // veg
+            return items[1];
+        }
+        case 3: { // bug
+            return items[2];
+        }
+        default: {
+            return items[0];
+        }
     }
 }
 
 void Shop::buyPlant(){
-
+    
 }
 
 void Shop::sellPlant(int pos){
