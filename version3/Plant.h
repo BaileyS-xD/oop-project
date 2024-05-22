@@ -10,9 +10,9 @@ class Plant{
         double growth;             //percentage of plant growth
         float waterLevel;          //percentage the plant is watered
         bool isPlanted;             //if the plant is planted or not
-        int value;
-        string name;
-    public:
+        int value;                  // value of plant
+        string name;                // name of plant
+    public: 
         Plant();                    //constructor
         Plant(bool planted);        //creates an 'empty' or planted plant
         void waterPlant();          //sets water level to 100

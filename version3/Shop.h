@@ -10,16 +10,12 @@ using namespace std;
 
 class Shop {
     protected:
-        Item** items;
+        Item** items;       // array of items
 
     public:
         Shop();
         Item* buyItem(int n);
-        void sellPlant(int pos);
-        void upgradeGarden();
-        void upgradeWater();
         Item** get_Items();
-        void buyPlant();
 };
 
 #endif

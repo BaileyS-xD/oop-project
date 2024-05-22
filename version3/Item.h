@@ -7,8 +7,8 @@ using namespace std;
 
 class Item {
     protected:
-        int cost;
-        string name;
+        int cost;       //cost of item
+        string name;    //name of item
     public:
         Item();
         int get_cost();

@@ -6,7 +6,7 @@ using namespace std;
 
 class Vegetable : public Plant {
     protected:
-        int waterUsage;
+        int waterUsage;     // waterusage of vegetable
     public:
         Vegetable(); 
         Vegetable(string n, int i, int val);

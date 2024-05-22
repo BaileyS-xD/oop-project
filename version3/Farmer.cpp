@@ -5,7 +5,7 @@
 
 using namespace std;
 
-Farmer::Farmer(){
+Farmer::Farmer(){           // default constructor, sets initial values
     inventory.resize(9);
     money = 500;
     name = "NULL";
@@ -17,38 +17,41 @@ Farmer::Farmer(){
     waterTank = waterCapacity;
 }
 
-void Farmer::waterPlant(){
+void Farmer::waterPlant(){      // waters plants, user inputs a position and the plant at that position is watered
     vector<Plant*> tempPlants = garden->getGarden();
     int pos;
+    float water;
     showGarden();
     cout << "Your water tank currently has " << waterTank << "L" << endl;
     cout << "Please enter the number of the plant you wish to water." << endl;
     cin >> pos;
     pos--;
-    garden->waterLocation(pos);
-    waterTank -= tempPlants[pos]->getWaterUsage();
+    water = tempPlants[pos]->getWaterLevel();       // gets the current water level,
+    water = 100 - water;                            // sets the difference of that water level to 100
+    garden->waterLocation(pos);                  
+    waterTank -= water;                             // takes the difference from the water tank
 }
 
-vector<Item*> Farmer::get_Inventory(){
+vector<Item*> Farmer::get_Inventory(){ // returns inventory vector
     return inventory;
 }
 
-Item* Farmer::get_Inventory(int n){
+Item* Farmer::get_Inventory(int n){   // returns item at inventory[n]
     return inventory[n];
 }
 
-string Farmer::get_Name(){
+string Farmer::get_Name(){          // returns name
     return name;
 }
 
-int Farmer::get_DayNum(){
+int Farmer::get_DayNum(){           // returns dayNum
     return dayNum;
 }
-int Farmer::get_Money(){
+int Farmer::get_Money(){            // returns money
     return money;
 }
 
-void Farmer::endDay(){
+void Farmer::endDay(){              // ends the day, refill water tank, grow all the plants, increase day num and save the game
     waterTank = waterCapacity;
     garden->dayEnd();
     dayNum++;
@@ -59,9 +62,9 @@ void Farmer::endDay(){
 
 }
 
-void Farmer::buy(int n){
+void Farmer::buy(int n){        // buy function, user can buy items from the shop
     int pos;
-    if (n < 4){
+    if (n < 4){                 // buying items that will go into your inventory
         Item* tempItem = shop->buyItem(n);
 
         if (money >= tempItem->get_cost()) {
@@ -72,7 +75,7 @@ void Farmer::buy(int n){
         } else {
             cout << "ERROR, NOT ENOUGH FUNDS!" << endl;
         }
-    } else if (n == 4){
+    } else if (n == 4){         // buying plants, 
         Plant* tempPlant = new Vegetable("Potato", 34, 50);
         if (hasFertiliser("Vegetable Fertiliser") == true){
             if (money >= tempPlant->getValue()){
@@ -84,10 +87,10 @@ void Farmer::buy(int n){
                     cout << "Planting Successful!" << endl;
                     //sleep(1);
                 }
-            } else {
+            } else {        // error checking for funds
                 cout << "ERROR, NOT ENOUGH FUNDS!" << endl;
             }
-        } else {
+        } else {            // error checking for fertiliser, required to plant.
             cout << "ERROR, YOU DON'T HAVE ANY FERTILISER! BUY SOME FROM THE SHOP!" << endl;
         }
     } else if (n == 5){
@@ -110,7 +113,7 @@ void Farmer::buy(int n){
         }
     } else if (n == 6){
         Plant* tempPlant;
-        if (hasBugRepel() == true){
+        if (hasBugRepel() == true){     // if a user has bug repellent in their inventory, its added to the fruit
             tempPlant = new Blueberry(true);
             cout << "Bug Repellent Used!" << endl;
         } else {
@@ -156,7 +159,7 @@ void Farmer::buy(int n){
         } else {
             cout << "ERROR, YOU DON'T HAVE ANY FERTILISER! BUY SOME FROM THE SHOP!" << endl;
         }
-    } else if (n == 8){
+    } else if (n == 8){     // buy increased water capacity
         if (money >= 400){
             waterCapacity += 100;
             cout << "Water Tank Capacity successfully increased by 100L" << endl;
@@ -164,9 +167,9 @@ void Farmer::buy(int n){
         } else {
             cout << "ERROR! NOT ENOUGH FUNDS!" << endl;
         }
-    } else if (n == 9){
+    } else if (n == 9){     // increase garden size
         if (money >= 200){
-            int n = garden->getSize() + 1;
+            int n = (garden->getSize() + 1);
             garden->resizeGarden(n);
             cout << "Garden Size increased by 1!" << endl;
         } else {
@@ -175,11 +178,11 @@ void Farmer::buy(int n){
     }
 }
 
-void Farmer::set_name(string n){
+void Farmer::set_name(string n){        // set name
     name = n;
 }
 
-void Farmer::help(){
+void Farmer::help(){        // help function, displays list of options
     cout << "Welcome to the Main Menu!" << endl;
     cout << "View Shop: 1" << endl;
     cout << "View Garden: 2" << endl;
@@ -188,7 +191,7 @@ void Farmer::help(){
     cout << endl;
 }
 
-void Farmer::shopfront(){
+void Farmer::shopfront(){   // shop front, displays all the items available in the shop and your money
     cout << "Welcome to the Shop Front!" << endl;
     cout << "You currently have: $" << money << endl;
     //sleep(2);
@@ -208,17 +211,17 @@ void Farmer::shopfront(){
     //sleep(2);
 }
 
-void Farmer::showGarden(){
+void Farmer::showGarden(){      // displays garden, also where you can harvest plants
     bool harv;
     int pos;
     int val;
     vector<Plant*> tempPlants = garden->getGarden();
     cout << "Your Garden currently has " << garden->getSize() << " spots." << endl;
-    for (int i = 0; i < garden->getSize(); i++){
+    for (int i = 0; i < garden->getSize(); i++){    // display the name of each plant and its details
         if (tempPlants[i]->getPlanted() == true){
             cout << "In spot " << (i+1) << " there is a " << tempPlants[i]->getName() << endl;
             tempPlants[i]->displayPlant();
-            if (tempPlants[i]->getGrowth() == 100){
+            if (tempPlants[i]->getGrowth() == 100){     // if a plant is fully grown, user can harvest
                 cout << "This plant is ready for harvest, type " << (i+1) <<  " to harvest!" << endl;
                 harv = true;
             }
@@ -227,90 +230,99 @@ void Farmer::showGarden(){
             cout << "There is nothing in spot " << (i+1) << endl;
             cout << endl;
         }
-        if (harv == true){
-            cin >> pos;
-            pos--;
+    }
+    if (harv == true){      // if there is a plant to harvest, user can input the position of the plant they want to harvest
+        cin >> pos;
+        pos--;
+        if (tempPlants[pos]->getGrowth() == 100){ // error checking to make sure the plant selected is fully grown
             val = garden->removePlant(pos);
             money = money + val;
             cout << "Harvest Successful! $" << val << " has been added to your account!" << endl;
+        } else {
+            cout << "Invalid Input! Harvest Failed!" << endl;
         }
     }
 }
 
-bool Farmer::hasFertiliser(string s){
+bool Farmer::hasFertiliser(string s){       // check to see if a user has fertiliser in their inventory
     for (int i = 0; i < invPos; i++){
         if (inventory[i]->get_name() == s){
             inventory[i] = new Item;
+            invPos--;
             return true;
         }
     }
     return false;
 }
 
-bool Farmer::hasBugRepel(){
+bool Farmer::hasBugRepel(){                 // check to see if bug repellent in inv
     for (int i = 0; i < invPos; i++){
         if (inventory[i]->get_name() == "Bug Repellent"){
             inventory[i] = new Item;
+            invPos--;
             return true;
         }
     }
     return false;
 }
 
-bool Farmer::readFile() {
-    ifstream input("save.txt"); // Open the file for reading
-    if (input.is_open()) {
+bool Farmer::readFile() {               // file loading
+    ifstream input; // open the file
+    input.open("save.txt", ios::in);
+    if (input.is_open()) {              // error checking, ensure file is open before beginning to read
         // Read farmer data first
         input >> money;
         input >> invPos;
-        inventory.resize(invPos);
-        for (int i = 0; i < invPos; ++i) {
+        inventory.resize(9);            // input variables
+        for (int i = 0; i < 9; ++i) {   // input each inventory item
+            inventory[i] = new Item;
             string itemName;
             int itemCost;
-            input >> itemName >> itemCost;
-            if (itemName == "Fruit Fertiliser") {
-                inventory[i] = new FruitFert;
-            } else if (itemName == "Vegetable Fertiliser") {
-                inventory[i] = new VegFert;
-            } else if (itemName == "Bug Repellent") {
-                inventory[i] = new BugRepel;
+            if (invPos > 0){
+                input >> itemName >> itemCost;
+                if (itemName == "Fruit Fertiliser") {
+                    inventory[i] = new FruitFert;
+                } else if (itemName == "Vegetable Fertiliser") {
+                    inventory[i] = new VegFert;
+                } else if (itemName == "Bug Repellent") {
+                    inventory[i] = new BugRepel;
+                }
             }
         }
         input >> name;
         input >> dayNum;
-        garden->readFile(input); // Read garden contents
+        garden->readFile(input); // input garden data
         input >> waterCapacity;
-        input >> waterTank;
 
-        input.close(); // Close the file
-        return true; // Return true indicating successful read
+        input.close(); // close the file
+        return true;
     } else {
-        cout << "Unable to open file." << endl; // Display error message if unable to open file
-        return false; // Return false indicating unsuccessful read
+        cout << "Unable to open file." << endl;
+        return false;
     }
 }
 
-bool Farmer::writeFile(){
-    ofstream output ("save.txt"); // Open the file for writing
-    if (output.is_open()) {
-        // Write each variable to the file, separated by newlines or other delimiters
-        output << money << endl; // Write money
-        output << invPos << endl; // Write invPos
-        for (int i = 0; i < invPos; ++i) {
-            // Write each item in the inventory
-            output << inventory[i]->get_name() << endl; // Write item name
-            output << inventory[i]->get_cost() << endl; // Write item cost
+bool Farmer::writeFile(){       // file saving
+    ofstream output;    // output file,
+    output.open("save.txt", ios::out);
+    if (output) {   // error checking
+        output << money << endl;
+        output << invPos << endl; // writing variables
+        for (int i = 0; i < invPos; ++i) {      // writing each inventory item
+            if (inventory[i]->get_name() != "NULL"){
+            output << inventory[i]->get_name() << endl;
+            output << inventory[i]->get_cost() << endl;
+            }
         }
-        output << name << endl; // Write name
-        output << dayNum << endl; // Write dayNum
-        garden->writeFile(output); // Write garden contents
-        output << waterCapacity << endl; // Write waterCapacity
-        output << waterTank << endl; // Write waterTank
+        output << name << endl;
+        output << dayNum << endl;
+        garden->writeFile(output); // write garden data
+        output << waterCapacity << endl;
 
-        output.close(); // Close the file
-        return true; // Return true indicating successful write
+        output.close();
+        return true;
     } else {
-        cout << "Unable to open file." << endl; // Display error message if unable to open file
-        return false; // Return false indicating unsuccessful write
+        cout << "Unable to open file." << endl;
+        return false;
     }
 }

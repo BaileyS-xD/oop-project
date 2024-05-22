@@ -26,7 +26,7 @@ class Farmer { // Farmer class, acts as a class to store everything for the play
         Shop* shop;                     // stores the shop class
         int waterCapacity;              // stores the max capacity of the tank
         int waterTank;                  // stores the amount of water
-    public: // Appropriate getters for variables, along with functions that the player will use to interact with the game.
+    public: // majority of the interaction between the user and the program, see cpp file for details
         Farmer();
         void waterPlant();
         vector<Item*> get_Inventory();

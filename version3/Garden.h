@@ -6,6 +6,7 @@
 #include "Blueberry.h"
 #include <vector>
 #include <fstream>
+#include <string>
 
 class Garden {
     protected: 

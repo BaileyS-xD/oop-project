@@ -8,7 +8,7 @@ class Blueberry : public Fruit{
     public:
         Blueberry();
         Blueberry(bool bug);
-        Blueberry(bool bug, double grow, float water);
+        Blueberry(bool bug, double grow, float water, bool plant);
         int harvest();
 };
 

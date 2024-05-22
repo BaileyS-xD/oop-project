@@ -18,7 +18,7 @@
 
 using namespace std;
 
-int main(){
+int main(){ // implementation of classes as a game
     Farmer f;
     string name;
     int p1 = 1;
@@ -61,7 +61,7 @@ int main(){
 //
 
 // Gameplay
-    while (p1 == 1){
+    while (p1 == 1){    // while playing, ask user to choose option from main menu
         cout << endl;
         cout << "Choose your option:" << endl;
         cin >> opt1;
@@ -69,47 +69,47 @@ int main(){
         switch (opt1){
             case 1 : { // Accessing Shopfront
                 p2 = 1;
-                while(p2 == 1) {
+                while(p2 == 1) {    // loop inside shop so you can continue buying
                     f.shopfront();
                     cout << "Type the number of the item you want to purchase, type 10 to see the options again, or type 11 to return to the main menu." << endl;
                     cin >> opt2;
                     cout << endl;
-                    if (opt2 == 1 || opt2 == 2 || opt2 == 3 || opt2 == 4 || opt2 == 5 || opt2 == 6 || opt2 == 7 || opt2 == 8 || opt2 == 9){
+                    if (opt2 == 1 || opt2 == 2 || opt2 == 3 || opt2 == 4 || opt2 == 5 || opt2 == 6 || opt2 == 7 || opt2 == 8 || opt2 == 9){ // buys option
                         f.buy(opt2);
                         cout << endl;
-                    } else if (opt2 == 10){
+                    } else if (opt2 == 10){ // shows options again
                         p2 = 1;
-                    } else if (opt2 == 11){
+                    } else if (opt2 == 11){ // exits shop
                         p2 = 0;
                         cout << endl;
                         f.help();
                         break;
                     } else { // Error Handling
                         cin.clear();
-                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        cin.ignore(numeric_limits<streamsize>::max(), '\n');    // clearing invalid inputs
                         cout << "ERROR! INVALID INPUT!" << endl;
                         cout << endl;
                     }
                 }
                 break;
             }
-            case 2 : {
+            case 2 : {  // Display garden
                 f.showGarden();
                 sleep(3);
                 f.help();
                 break;
             }
-            case 3 : {
+            case 3 : {  // Water Plant
                 f.waterPlant();
                 f.help();
                 break;
             }
-            case 4 : {
+            case 4 : {  // End Day
                 f.endDay();
                 break;
                 // end day
             }
-            case 5 : {
+            case 5 : {  // show main menu
                 cout << endl;
                 f.help();
                 break;
@@ -126,12 +126,3 @@ int main(){
     }
 //
 }
-
-// TODO:
-// Buy / Sell Plants (DONE)
-// View Garden (DONE)
-// Upgrade stuff under shop (done)
-// Water Plants (DONE)
-// End Day (DONE)
-
-// FIX SAVE !!!!

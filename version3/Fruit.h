@@ -5,8 +5,8 @@
 
 class Fruit : public Plant{
     protected:
-        int waterUsage;
-        bool hasBugRepellent;
+        int waterUsage;         // stores water usage of fruit
+        bool hasBugRepellent;   // stores if the fruit has bug repellent
     public: 
         Fruit();
         Fruit(string n, int i, int val);
