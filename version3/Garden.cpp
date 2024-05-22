@@ -47,7 +47,11 @@ void Garden::dayEnd() {     // ends day, ends day for each plant
 }
 
 void Garden::waterLocation(int location) {  // water plant at location
-    plants[location]->waterPlant();
+    if (location < 0 || location >= sizeOfGarden){
+        cout << "Error! Invalid Location" << endl;
+    } else {
+        plants[location]->waterPlant();
+    }
 }
 
 int Garden::getSize(){              // return size

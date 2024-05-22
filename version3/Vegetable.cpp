@@ -25,14 +25,16 @@ Vegetable::Vegetable(string n, int i, int val, bool plant, double grow, float wa
 }
 
 void Vegetable::endDay(){   // end day, increases growth
-    growth = growth + 20;
-    if (growth >= 100){ // ensures growth is max 100
-        growth = 100;
-    }
-    waterLevel = waterLevel - waterUsage;   // lowers water level
-    if (waterLevel <= 0){   // if no water, dies.
-        isPlanted = 0;
-        cout << "A plant has died due to lack of water!" << endl;
+    if (isPlanted == true){
+        growth = growth + 20;
+        if (growth >= 100){ // ensures growth is max 100
+            growth = 100;
+        }
+        waterLevel = waterLevel - waterUsage;   // lowers water level
+        if (waterLevel <= 0){   // if no water, dies.
+            isPlanted = 0;
+            cout << "A plant has died due to lack of water!" << endl;
+        }
     }
 }
 

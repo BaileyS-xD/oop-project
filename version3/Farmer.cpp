@@ -26,10 +26,14 @@ void Farmer::waterPlant(){      // waters plants, user inputs a position and the
     cout << "Please enter the number of the plant you wish to water." << endl;
     cin >> pos;
     pos--;
-    water = tempPlants[pos]->getWaterLevel();       // gets the current water level,
-    water = 100 - water;                            // sets the difference of that water level to 100
-    garden->waterLocation(pos);                  
-    waterTank -= water;                             // takes the difference from the water tank
+    if (pos < 0 || pos >= garden->getSize()){
+        cout << "Error! Invalid Location" << endl << endl;
+    } else {
+        water = tempPlants[pos]->getWaterLevel();       // gets the current water level,
+        water = 100 - water;                            // sets the difference of that water level to 100
+        garden->waterLocation(pos);                  
+        waterTank -= water;                             // takes the difference from the water tank
+    }
 }
 
 vector<Item*> Farmer::get_Inventory(){ // returns inventory vector
@@ -234,12 +238,16 @@ void Farmer::showGarden(){      // displays garden, also where you can harvest p
     if (harv == true){      // if there is a plant to harvest, user can input the position of the plant they want to harvest
         cin >> pos;
         pos--;
-        if (tempPlants[pos]->getGrowth() == 100){ // error checking to make sure the plant selected is fully grown
-            val = garden->removePlant(pos);
-            money = money + val;
-            cout << "Harvest Successful! $" << val << " has been added to your account!" << endl;
-        } else {
+        if (pos >= garden->getSize() || pos < 0){
             cout << "Invalid Input! Harvest Failed!" << endl;
+        } else {
+            if (tempPlants[pos]->getGrowth() == 100){ // error checking to make sure the plant selected is fully grown
+                val = garden->removePlant(pos);
+                money = money + val;
+                cout << "Harvest Successful! $" << val << " has been added to your account!" << endl;
+            } else {
+                cout << "Invalid Input! Harvest Failed!" << endl;
+            }
         }
     }
 }

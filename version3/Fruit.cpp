@@ -55,11 +55,12 @@ void Fruit::endDay() {  // end day,
         if (growth >= 100){     // ensure growth doesnt exceed 100
             growth = 100;
         }
+        waterLevel = waterLevel - waterUsage;   // lower water level of the plant
         if (waterLevel <= 0 || die == true){    // if the waterlevel is lessthan or equal to 0 or the plant died, isplanted is false
             isPlanted = false;
             std::cout << "A Fruit has died :(" << std::endl;
         }
-        waterLevel = waterLevel - waterUsage;   // lower water level of the plant
+
     }
 }
 
